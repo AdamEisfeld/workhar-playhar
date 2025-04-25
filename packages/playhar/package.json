@@ -13,6 +13,12 @@
 	],
 	"author": "Adam Eisfeld <adam.eisfeld@gmail.com>",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AdamEisfeld/workhar-playhar.git",
+		"directory": "packages/playhar"
+	},
+	"homepage": "https://github.com/AdamEisfeld/workhar-playhar/tree/main/packages/playhar#readme",
 	"type": "module",
 	"main": "./dist/playhar.js",
 	"types": "./dist/playhar.d.ts",
@@ -38,7 +44,7 @@
 		"format": "eslint --fix"
 	},
 	"dependencies": {
-		"mustachr": "*",
+		"@adameisfeld/mustachr": "*",
 		"workhar": "*",
 		"commander": "^13.1.0",
 		"inquirer": "^12.5.2",

@@ -3,7 +3,7 @@ import * as workhar from '../src/workhar.js';
 import { WorkharErrorHarGraphQLParseFailed, WorkharErrorHarParseFailed, WorkharErrorHarResponseParseFailed } from '../src/errors.js';
 import fs from 'fs';
 import path from 'path';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 
 const TEMP_DIR = useTempDir();
 

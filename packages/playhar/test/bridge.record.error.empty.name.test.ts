@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 import * as playhar from '../src/playhar.js';
 import { run } from '../src/bridge.js';
 import { useDefaultConfigFile } from './helpers.js';

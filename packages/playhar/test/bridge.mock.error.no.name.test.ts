@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { mockInquirer, useTempDir } from 'test-utils';
+import { mockInquirer, useTempDir } from '@adameisfeld/test-utils';
 import { useDefaultConfigFile } from './helpers.js';
 
 const TEMP_DIR = useTempDir();

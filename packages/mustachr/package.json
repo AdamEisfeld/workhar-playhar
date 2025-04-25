@@ -1,5 +1,5 @@
 {
-	"name": "mustachr",
+	"name": "@adameisfeld/mustachr",
 	"version": "0.0.1",
 	"description": "Extract hardcoded values from files and replace them with mustache-style template variables. Ideal for sanitizing secrets in HAR files and other structured text.",
 	"keywords": [
@@ -9,6 +9,12 @@
 	],
 	"author": "Adam Eisfeld <adam.eisfeld@gmail.com>",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AdamEisfeld/workhar-playhar.git",
+		"directory": "packages/mustachr"
+	},
+	"homepage": "https://github.com/AdamEisfeld/workhar-playhar/tree/main/packages/mustachr#readme",
 	"type": "module",
 	"main": "./dist/mustachr.js",
 	"types": "./dist/mustachr.d.ts",
@@ -45,6 +51,6 @@
 		"tsx": "^4.19.3",
 		"typescript": "^5.8.3",
 		"vitest": "^3.1.1",
-		"test-utils": "*"
+		"@adameisfeld/test-utils": "*"
 	}
 }

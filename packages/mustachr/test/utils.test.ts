@@ -4,7 +4,7 @@ import path from 'path';
 import { z } from 'zod';
 import * as utils from '../src/utils.js';
 import * as mustachr from '../src/mustachr.js';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 
 const TEMP_DIR = useTempDir();
 

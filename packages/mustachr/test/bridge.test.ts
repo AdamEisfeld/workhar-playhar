@@ -7,7 +7,7 @@ import * as mustachr from '../src/mustachr.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 
 const TEMP_DIR = useTempDir();
 

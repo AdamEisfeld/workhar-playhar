@@ -2,7 +2,7 @@ import { test, expect, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import * as workhar from '../src/workhar.js';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 
 const TEMP_DIR = useTempDir();
 

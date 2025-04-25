@@ -1,5 +1,5 @@
 import { test } from 'vitest';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 import { mockAnyRecording, useDefaultConfigFile } from './helpers.js';
 import path from 'path';
 

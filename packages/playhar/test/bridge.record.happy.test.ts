@@ -1,7 +1,7 @@
 import { test } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { mockInquirer, mockRecording, useTempDir } from 'test-utils';
+import { mockInquirer, mockRecording, useTempDir } from '@adameisfeld/test-utils';
 
 const TEMP_DIR = useTempDir();
 

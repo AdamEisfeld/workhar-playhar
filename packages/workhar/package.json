@@ -12,6 +12,12 @@
 	],
 	"author": "Adam Eisfeld <adam.eisfeld@gmail.com>",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AdamEisfeld/workhar-workhar.git",
+		"directory": "packages/workhar"
+	},
+	"homepage": "https://github.com/AdamEisfeld/workhar-workhar/tree/main/packages/workhar#readme",
 	"type": "module",
 	"main": "./dist/workhar.js",
 	"types": "./dist/workhar.d.ts",

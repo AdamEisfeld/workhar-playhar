@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import * as playhar from '../src/playhar';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 
 const TEMP_DIR = useTempDir();
 

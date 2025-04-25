@@ -1,6 +1,6 @@
 # Workhar Playhar Monorepo
 
-[![Build](https://img.shields.io/github/actions/workflow/status/AdamEisfeld/workhar-playhar/ci.yml?branch=main&style=for-the-badge)](https://github.com/AdamEisfeld/workhar-playhar/actions) [![Coverage](https://img.shields.io/coveralls/github/AdamEisfeld/workhar-playhar/main?style=for-the-badge)](https://coveralls.io/github/AdamEisfeld/workhar-playhar?branch=main)
+[![Build](https://img.shields.io/github/actions/workflow/status/AdamEisfeld/workhar-playhar/ci.yml?branch=main&style=for-the-badge)](https://github.com/AdamEisfeld/workhar-playhar/actions) [![Coverage](https://img.shields.io/coveralls/github/AdamEisfeld/workhar-playhar/main?style=for-the-badge)](https://coveralls.io/github/AdamEisfeld/workhar-playhar?branch=main) ![NPM](https://img.shields.io/npm/v/playhar?style=for-the-badge) ![LICENSE](https://img.shields.io/npm/l/playhar?style=for-the-badge)
 
 This monorepo contains three related libraries that work together to help you record, sanitize, extract, and replay HTTP API traffic in your tests:
 
@@ -132,7 +132,7 @@ mustachr inject ./api.har --injections ./mustachr.injections.ts
 ##### Programmatic Usage
 
 ```ts
-import { extract, inject, defineExtractions, defineInjections } from 'mustachr';
+import { extract, inject, defineExtractions, defineInjections } from '@adameisfeld/mustachr';
 
 const extracted = await extract({
   input: fs.readFileSync('./api.har', 'utf-8'),

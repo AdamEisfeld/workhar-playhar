@@ -1,4 +1,4 @@
-import * as mustachr from 'mustachr';
+import * as mustachr from '@adameisfeld/mustachr';
 import * as workhar from 'workhar';
 import { chromium } from '@playwright/test';
 import fs from 'fs';

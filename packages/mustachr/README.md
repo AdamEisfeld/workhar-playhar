@@ -29,7 +29,7 @@ Mustachr supports two primary operations:
 
 ---
 
-## 📁 Example
+## Example
 
 ### Input file (`example.txt`)
 
@@ -43,7 +43,7 @@ Mustachr supports two primary operations:
 ### Extractions file (`mustachr.extractions.ts`)
 
 ```ts
-import { defineExtractions } from 'mustachr';
+import { defineExtractions } from '@adameisfeld/mustachr';
 
 export default defineExtractions([
   {
@@ -67,7 +67,7 @@ export default defineExtractions([
 ### Injections file (`mustachr.injections.ts`)
 
 ```ts
-import { defineInjections } from 'mustachr';
+import { defineInjections } from '@adameisfeld/mustachr';
 
 export default defineInjections({
   API_KEY: 'Mocked1234'
@@ -96,14 +96,14 @@ These can be written as `.ts`, `.js`, or `.json` files and exported using `defin
 
 ```ts
 // mustachr.extractions.ts
-import { defineExtractions } from 'mustachr';
+import { defineExtractions } from '@adameisfeld/mustachr';
 
 export default defineExtractions([ /* extractions here */ ]);
 ```
 
 ```ts
 // mustachr.injections.ts
-import { defineInjections } from 'mustachr';
+import { defineInjections } from '@adameisfeld/mustachr';
 
 export default defineInjections({ /* injections here */ });
 ```
@@ -208,7 +208,7 @@ mustachr inject ./output.txt --injections ./mustachr.injections.ts --out ./hydra
 You can use mustachr directly in code:
 
 ```ts
-import { extract, inject, defineExtractions, defineInjections } from 'mustachr';
+import { extract, inject, defineExtractions, defineInjections } from '@adameisfeld/mustachr';
 
 const sanitized = await extract({
   input: 'key=SuperSecret123',

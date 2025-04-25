@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import * as mustachr from 'mustachr';
+import * as mustachr from '@adameisfeld/mustachr';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MARK: Internal Types

@@ -2,7 +2,7 @@ import { test, expect } from 'vitest';
 import { run } from '../src/bridge';
 import fs from 'fs';
 import path from 'path';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 import * as workhar from '../src/workhar.js';
 
 const TEMP_DIR = useTempDir();

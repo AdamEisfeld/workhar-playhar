@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import fs from 'fs';
-import { useTempDir } from 'test-utils';
+import { useTempDir } from '@adameisfeld/test-utils';
 import path from 'path';
 import { mockAnyRecording, useDefaultConfigFile } from './helpers.js';
 
