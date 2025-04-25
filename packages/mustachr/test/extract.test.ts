@@ -173,7 +173,7 @@ test('Test extracting from .env values', async () => {
 	const extractions: mustachr.types.MustachrExtractions = [
 		{
 			type: 'env',
-			path: './test/files/.env.stub',
+			path: './test/files/.fakeenv.stub',
 		}
 	];
 
