@@ -24,3 +24,30 @@ jobs:
 
       - name: Run tests
         run: npm run test
+
+      - name: Upload mustachr coverage
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: packages/mustachr/coverage/lcov.info
+          parallel: true
+
+      - name: Upload workhar coverage
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: packages/workhar/coverage/lcov.info
+          parallel: true
+
+      - name: Upload playhar coverage
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: packages/playhar/coverage/lcov.info
+          parallel: true
+
+      - name: Finalize parallel jobs
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true

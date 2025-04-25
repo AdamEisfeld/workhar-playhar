@@ -14,6 +14,8 @@ export default defineConfig({
 				'src/errors.ts',
 				'src/types.ts',
 			],
+			reporter: ['text', 'json-summary', 'lcov'],
+			reportsDirectory: './coverage',
 		}
 	},
 });
