@@ -1,6 +1,6 @@
 {
 	"name": "workhar",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Convert HAR files to modular JSON fixtures and back. Perfect for snapshotting and mocking API responses in your test suite.",
 	"keywords": [
 		"har",
@@ -40,7 +40,9 @@
 		"test": "vitest run --coverage",
 		"dev": "vitest",
 		"lint": "eslint .",
-		"format": "eslint --fix"
+		"format": "eslint --fix",
+		"preversion": "npm run test && npm run lint && npm run build",
+		"postversion": "git add ."
 	},
 	"dependencies": {
 		"commander": "^13.1.0",

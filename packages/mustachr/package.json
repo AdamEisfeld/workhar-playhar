@@ -1,6 +1,6 @@
 {
 	"name": "@adameisfeld/mustachr",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Extract hardcoded values from files and replace them with mustache-style template variables. Ideal for sanitizing secrets in HAR files and other structured text.",
 	"keywords": [
 		"mustache",
@@ -37,7 +37,9 @@
 		"test": "vitest run --coverage",
 		"dev": "vitest",
 		"lint": "eslint .",
-		"format": "eslint --fix"
+		"format": "eslint --fix",
+		"preversion": "npm run test && npm run lint && npm run build",
+		"postversion": "git add ."
 	},
 	"dependencies": {
 		"commander": "^13.1.0",

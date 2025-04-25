@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import inquirer from 'inquirer';
-import * as playhar from './playhar';
+import * as playhar from './playhar.js';
 import pkg from '../package.json' assert { type: 'json' };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

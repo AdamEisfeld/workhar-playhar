@@ -1,4 +1,4 @@
-import * as mustachr from './mustachr';
+import * as mustachr from './mustachr.js';
 import { Command } from 'commander';
 import fs from 'fs';
 import pkg from '../package.json' assert { type: 'json' };

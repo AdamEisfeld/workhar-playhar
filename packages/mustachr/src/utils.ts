@@ -1,5 +1,5 @@
 import { ZodSchema, z } from 'zod';
-import { MustachrErrorUtilsUnsupportedFileType, MustachrErrorUtilsNoExport, MustachrErrorUtilsFileNotFound } from './errors';
+import { MustachrErrorUtilsUnsupportedFileType, MustachrErrorUtilsNoExport, MustachrErrorUtilsFileNotFound } from './errors.js';
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';

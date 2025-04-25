@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { run } from './bridge';
+import { run } from './bridge.js';
 
 try {
 	await run(process.argv);

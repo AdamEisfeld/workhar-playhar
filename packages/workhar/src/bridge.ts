@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import * as workhar from './workhar';
+import * as workhar from './workhar.js';
 import pkg from '../package.json' assert { type: 'json' };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
