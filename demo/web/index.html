@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Playhar Demo</title>
+</head>
+	<body>
+		<h1>Sign In</h1>
+		<form id="sign-in-form">
+			<label>
+			Email:
+			<input type="email" id="email" required />
+			</label>
+			<br /><br />
+			<label>
+			Password:
+			<input type="password" id="password" required />
+			</label>
+			<br /><br />
+			<button type="submit">Sign In</button>
+		</form>
+		<script>
+			document.getElementById('sign-in-form').addEventListener('submit', async (e) => {
+				e.preventDefault();
+				const email = document.getElementById('email').value;
+				const password = document.getElementById('password').value;
+				const res = await fetch('http://localhost:3000/api/sign-in', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email, password })
+				});
+				const data = await res.json();
+				console.log('Token:', data.token);
+
+				const profileRes = await fetch('http://localhost:3000/api/profile', {
+					headers: { Authorization: data.token }
+				});
+				const profile = await profileRes.json();
+				alert(`Welcome ${profile.name} (${profile.email})`);
+			});
+		</script>
+	</body>
+</html>

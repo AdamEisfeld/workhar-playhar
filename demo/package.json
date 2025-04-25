@@ -1,0 +1,16 @@
+{
+	"name": "playhar-demo",
+	"version": "0.1.0",
+	"scripts": {
+	"dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+	"dev:api": "tsx api/index.ts",
+	"dev:web": "serve web -p 3001"
+	},
+	"devDependencies": {
+		"concurrently": "^8.2.0",
+		"cors": "^2.8.5",
+		"express": "^4.18.2",
+		"tsx": "^4.7.0",
+		"serve": "^14.2.0"
+	}
+}

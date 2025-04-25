@@ -1,0 +1,8 @@
+[
+	{
+		"type": "string",
+		"property": "TOKENJSON",
+		"search": "Foo",
+		"replace": "{{ property }}"
+	}
+]

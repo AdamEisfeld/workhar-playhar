@@ -1,0 +1,51 @@
+{
+	"name": "workhar",
+	"version": "0.0.1",
+	"description": "Convert HAR files to modular JSON fixtures and back. Perfect for snapshotting and mocking API responses in your test suite.",
+	"keywords": [
+		"har",
+		"mock",
+		"playwright",
+		"cli",
+		"http",
+		"testing"
+	],
+	"author": "Adam Eisfeld <adam.eisfeld@gmail.com>",
+	"license": "MIT",
+	"type": "module",
+	"main": "./dist/workhar.js",
+	"types": "./dist/workhar.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/workhar.js",
+			"types": "./dist/workhar.d.ts"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"bin": {
+		"workhar": "./dist/cli.js"
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"test": "vitest run --coverage",
+		"dev": "vitest",
+		"lint": "eslint .",
+		"format": "eslint --fix"
+	},
+	"dependencies": {
+		"commander": "^13.1.0",
+		"zod": "^3.24.2"
+	},
+	"devDependencies": {
+		"@types/node": "^22.14.1",
+		"graphql": "^16.10.0",
+		"ts-node": "^10.9.2",
+		"tsx": "^4.19.3",
+		"typescript": "^5.8.3",
+		"vitest": "^3.1.1"
+	}
+}

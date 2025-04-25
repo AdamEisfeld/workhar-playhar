@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.base.json",
+	"files": [],
+	"references": [
+		{ "path": "./packages/mustachr" },
+		{ "path": "./packages/workhar" },
+		{ "path": "./packages/playhar" }
+	]
+}
