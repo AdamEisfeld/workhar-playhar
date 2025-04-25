@@ -1,7 +1,10 @@
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import * as playhar from './playhar.js';
-import pkg from '../package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
+const pkg = require('../package.json');
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MARK: CLI

@@ -1,7 +1,10 @@
 import * as mustachr from './mustachr.js';
 import { Command } from 'commander';
 import fs from 'fs';
-import pkg from '../package.json' assert { type: 'json' };
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
+const pkg = require('../package.json');
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MARK: CLI
