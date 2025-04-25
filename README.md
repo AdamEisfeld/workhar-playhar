@@ -1,5 +1,7 @@
 # Workhar Playhar Monorepo
 
+[![CI](https://github.com/AdamEisfeld/workhar-playhar/actions/workflows/ci.yml/badge.svg)](https://github.com/AdamEisfeld/workhar-playhar/actions/workflows/ci.yml)
+
 This monorepo contains three related libraries that work together to help you record, sanitize, extract, and replay HTTP API traffic in your tests:
 
 | Package    | Description |
