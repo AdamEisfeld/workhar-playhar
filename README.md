@@ -1,6 +1,6 @@
 # Workhar Playhar Monorepo
 
-[![CI](https://github.com/AdamEisfeld/workhar-playhar/actions/workflows/ci.yml/badge.svg)](https://github.com/AdamEisfeld/workhar-playhar/actions/workflows/ci.yml)
+[![Build](https://img.shields.io/github/actions/workflow/status/AdamEisfeld/workhar-playhar/ci.yml?branch=main&style=for-the-badge)](https://github.com/AdamEisfeld/workhar-playhar/actions) [![Coverage](https://img.shields.io/coveralls/github/AdamEisfeld/workhar-playhar/main?style=for-the-badge)](https://coveralls.io/github/AdamEisfeld/workhar-playhar?branch=main)
 
 This monorepo contains three related libraries that work together to help you record, sanitize, extract, and replay HTTP API traffic in your tests:
 
