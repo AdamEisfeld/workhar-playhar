@@ -1,6 +1,6 @@
 {
 	"name": "workhar",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Convert HAR files to modular JSON fixtures and back. Perfect for snapshotting and mocking API responses in your test suite.",
 	"keywords": [
 		"har",
