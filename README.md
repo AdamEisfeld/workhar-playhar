@@ -1,15 +1,6 @@
-# workhar-playhar
+# Workhar Playhar Monorepo
 
-A monorepo of composable tools to help you record, extract, sanitize, and replay HAR files during end-to-end testing.
-
-This system allows you to:
-
-- Sanitize sensitive values from HAR files
-- Extract response JSON into organized fixtures
-- Inject values back into those fixtures at runtime (or, test time)
-- Mock real network requests using Playwright's `routeFromHAR()`
-
-## Packages
+This monorepo contains three related libraries that work together to help you record, sanitize, extract, and replay HTTP API traffic in your tests:
 
 | Package    | Description |
 |------------|-------------|
@@ -19,169 +10,173 @@ This system allows you to:
 
 ---
 
-## Example Workflow
+### 🎭 Playhar – Record, Template, and Replay HARs in Playwright
 
-### Typical Use
+[`playhar`](https://www.npmjs.com/package/playhar) is the core workflow layer that ties everything together.
 
-This system is built for **e2e test environments** where you want:
+It launches a real Playwright browser, records API traffic into a `.har` file, sanitizes sensitive values with mustache-style templates, and extracts response bodies into editable `.json` fixtures. These can then be rebuilt into usable HARs and replayed with `page.routeFromHAR()` in your tests.
 
-- The reliability of **real API responses**
-- The flexibility of **template-based value injection**
-- A clean separation between **recording** and **testing**
+##### Install
 
-Use the **CLI** when *recording* — it's fast and easy.
-Use the **programmatic API** when *testing* — it's flexible and dynamic.
+```bash
+npm install --save-dev playhar
+```
 
----
+Also ensure you have Playwright installed:
 
-### 1. Configure recording
+```bash
+npm install -D @playwright/test
+```
 
-You can define a config file to guide recording and extraction. Typically you'll use this via the **CLI**, but it’s also usable via code.
+##### Example Config (`playhar.config.ts`)
 
 ```ts
-// playhar.config.ts
 import { defineConfig } from 'playhar';
 
 export default defineConfig({
   directory: './recordings',
-  baseRecordingUrl: 'https://localhost:3000',
-  baseRequestUrl: 'https://api.localhost',
+  baseRequestUrl: 'https://api.example.com',
   extractions: [
     {
       type: 'regex',
-      property: 'AUTH_TOKEN',
-      search: '"token":"[^"]+"',
-      replace: '"token":"{{ property }}"'
+      property: 'SECRET_TOKEN',
+      search: 'token":"[^"]*',
+      replace: 'token":"{{ property }}"'
     }
-  ]
+  ],
 });
 ```
 
-This config will:
-
-- Record traffic from `baseRecordingUrl`
-- Only save network requests matching `baseRequestUrl`
-- Sanitize the HAR by replacing auth tokens with a template variable
-
----
-
-### 2. Record a session (via CLI)
+##### CLI Usage
 
 ```bash
-npx playhar record
+playhar record --url http://localhost:5173 --config ./playhar.config.ts
+playhar mock --name auth-flow --injections ./injections.json --out ./mocked.har
 ```
 
-This will:
-
-- Ask for a recording name to use for the new recording, eg 'sign-up'
-- Launch Playwright in headless mode
-- Record all requests to your target backend
-- Sanitize and convert the `.har` file into:
-  - A sanitized `.har`
-  - A `.workhar` map file, used internally
-  - A directory of `.json` response payloads, allowing you to tweak the recorded responses with a nicer DX
-
-Alternatively, you can call `playhar.record({...})` from your own setup script.
-
----
-
-### 3. Use it in your tests (via Code)
-
-Most commonly, you’ll **build a temporary HAR with injected values** before each test. This is done programmatically:
+##### Programmatic Usage
 
 ```ts
-import { mock, defineInjections, configFromFile } from 'playhar';
+import { record, mock, configFromFile } from 'playhar';
 
 const config = await configFromFile({ file: './playhar.config.ts', fallbacks: [] });
 
-const har = await mock({
-    name: 'sign-up',
-    injections: defineInjections({
-        AUTH_TOKEN: 'test-token-123',
-    }),
-    toHarFile: './temp/mocked.har',
-});
+await record({ config, name: 'auth-flow', url: 'http://localhost:5173' });
 
-await page.routeFromHAR(har);
+await mock({
+  config,
+  name: 'auth-flow',
+  injections: { SECRET_TOKEN: 'mocked-token' },
+  toHarFile: './mocked.har',
+});
 ```
 
-You can now control mock behavior through simple injection files. Easy to swap out per test.
+---
 
-If you prefer the CLI, you can also run:
+### Workhar – Convert HAR Files to JSON and Back
+
+[`workhar`](https://www.npmjs.com/package/workhar) is the engine that powers Playhar’s extraction and hydration process. It turns `.har` files into structured `.json` files you can edit, and then regenerates HARs from those responses.
+
+##### Install
 
 ```bash
-npx playhar mock --name sign-up --out ./temp/mocked.har
+npm install --save-dev workhar
 ```
 
----
+##### CLI Usage
 
-## Packages in Detail
-
-### [`mustachr`](./packages/mustachr)
-
-- Extracts sensitive values into `{{ tokens }}`
-- Injects replacements for those tokens
-- Can run via CLI or code
-
-```ts
-import { extract, inject } from 'mustachr';
-
-const output = await extract({ input: rawString, extractions });
-const final = inject({ input: output, injections });
+```bash
+workhar har2json ./recording.har ./.workhar --json ./json
+workhar json2har ./.workhar ./hydrated.har --json ./json
 ```
 
----
-
-### [`workhar`](./packages/workhar)
-
-- Converts `.har` → `.json` response files + `.workhar` map
-- Rebuilds `.har` from `.json` + `.workhar`
+##### Programmatic Usage
 
 ```ts
 import { har2json, json2har } from 'workhar';
 
-await har2json({ fromHarFile, toWorkharFile, withJsonDirectory });
-await json2har({ fromWorkHarFile, withJsonDirectory, toHarFile });
+await har2json({
+  fromHarFile: './recording.har',
+  toWorkharFile: './.workhar',
+  withJsonDirectory: './json',
+});
+
+await json2har({
+  fromWorkHarFile: './.workhar',
+  withJsonDirectory: './json',
+  toHarFile: './hydrated.har',
+});
 ```
 
 ---
 
-### [`playhar`](./packages/playhar)
+### 🥸 Mustachr – Template and Inject Mustache Files
 
-- Record a HAR from live browser session
-- Sanitize & extract values with `mustachr`
-- Save `.json` responses using `workhar`
-- Mock full API session in tests
+[`mustachr`](https://www.npmjs.com/package/mustachr) lets you extract hardcoded secrets or values from text files and replace them with mustache-style template tokens (like `{{ SECRET }}`). You can later inject them back using an injection map.
+
+##### Install
+
+```bash
+npm install --save-dev mustachr
+```
+
+##### CLI Usage
+
+```bash
+mustachr extract ./api.har --extractions ./mustachr.extractions.ts
+mustachr inject ./api.har --injections ./mustachr.injections.ts
+```
+
+##### Programmatic Usage
 
 ```ts
-import { record, mock } from 'playhar';
+import { extract, inject, defineExtractions, defineInjections } from 'mustachr';
+
+const extracted = await extract({
+  input: fs.readFileSync('./api.har', 'utf-8'),
+  extractions: defineExtractions([
+    {
+      type: 'string',
+      property: 'SECRET',
+      search: 'SuperSecret123',
+      replace: '{{ property }}',
+    },
+  ]),
+});
+
+const hydrated = inject({
+  input: extracted,
+  injections: defineInjections({ SECRET: 'MockedValue' }),
+});
 ```
 
 ---
 
-## Testing
+### Testing
 
-Each package is fully unit tested with 100% test coverage. You can run all tests with:
+All packages are 100% test-covered and tested with [Vitest](https://vitest.dev/). Run all tests from the monorepo root:
 
 ```bash
 npm run test
 ```
 
-Or test an individual package:
-
-```bash
-cd packages/playhar
-npm run test
-```
-
 ---
 
-## 🤝 Contributions
+### Repository Structure 📂
 
-PRs welcome! Each package is fully type-safe and tested. If adding a new feature, please include both CLI and programmatic support where possible.
+```
+workhar-playhar/
+  ├── packages/
+  │   ├── mustachr/
+  │   ├── workhar/
+  │   └── playhar/
+  ├── README.md
+  ├── turbo.json
+  └── ...
+```
 
 ---
 
 ## License
 
-MIT
+MIT © 2025 Adam Eisfeld

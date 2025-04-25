@@ -72,7 +72,7 @@ test('json2har happy path', async () => {
 
 	// Convert JSON back to HAR
 	await workhar.json2har({
-		fromWorkHarFile: workharFileLocation,
+		fromWorkharFile: workharFileLocation,
 		withJsonDirectory: jsonDir,
 		toHarFile: harFilePath,
 	});
@@ -96,7 +96,7 @@ test('json2har throws on missing workhar file', async () => {
 	// Attempt to convert JSON back to HAR without the JSON directory
 	try {
 		await workhar.json2har({
-			fromWorkHarFile: '',
+			fromWorkharFile: '',
 			withJsonDirectory: jsonDir,
 			toHarFile: harFilePath,
 		});
@@ -162,7 +162,7 @@ test('json2har throws on missing json directory', async () => {
 	// Attempt to convert JSON back to HAR without the JSON directory
 	try {
 		await workhar.json2har({
-			fromWorkHarFile: workharFileLocation,
+			fromWorkharFile: workharFileLocation,
 			withJsonDirectory: 'missing_directory',
 			toHarFile: harFilePath,
 		});
@@ -235,7 +235,7 @@ test('json2har logs warning if json file is missing for an entry', async () => {
 
 	// Convert JSON back to HAR
 	await workhar.json2har({
-		fromWorkHarFile: workharFileLocation,
+		fromWorkharFile: workharFileLocation,
 		withJsonDirectory: jsonDir,
 		toHarFile: harFilePath,
 	});
@@ -306,7 +306,7 @@ test('json2har throws on invalid JSON file', async () => {
 
 	try {
 		await workhar.json2har({
-			fromWorkHarFile: workharFileLocation,
+			fromWorkharFile: workharFileLocation,
 			withJsonDirectory: jsonDir,
 			toHarFile: harFilePath,
 		});
@@ -337,7 +337,7 @@ test('json2har throws on schema validation error', async () => {
 	try {
 
 		await workhar.json2har({
-			fromWorkHarFile: workharFileLocation,
+			fromWorkharFile: workharFileLocation,
 			withJsonDirectory: jsonDir,
 			toHarFile: harFilePath,
 		});
@@ -424,7 +424,7 @@ test('json2har skips non-JSON files', async () => {
 	// Convert JSON back to HAR
 
 	await workhar.json2har({
-		fromWorkHarFile: workharFileLocation,
+		fromWorkharFile: workharFileLocation,
 		withJsonDirectory: jsonDir,
 		toHarFile: harFilePath,
 	});

@@ -14,7 +14,7 @@ test('Test CLI record throws error if empty name specified', async () => {
 
 	// Run record while specifying an empty name to force the error
 	try {
-		await run(['node', 'playhar', 'record', '--config', CONFIG_FILE_PATH(), '--name', '']);
+		await run(['node', 'playhar', 'record', '--config', CONFIG_FILE_PATH(), '--name', '', '--url', 'http://localhost:5173']);
 		throw new Error('Expected an error to be thrown, but it did not.');
 	} catch(error) {
 		expect(error).toBeInstanceOf(playhar.errors.PlayharErrorRecordingNameRequired);

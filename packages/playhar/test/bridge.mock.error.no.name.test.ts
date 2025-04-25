@@ -12,9 +12,18 @@ test('Test CLI mock throws error if no name specified', async () => {
 
 	// Mock Inquirer to skip the prompt for the recording name
 	await mockInquirer({
-		response: {
-			name: undefined,
-		},
+		handler: (prompt) => {
+			if (prompt.message.startsWith('Enter a name for this HAR recording')) {
+				return { name: undefined };
+			}
+			if (prompt.message.startsWith('Enter the name of an existing HAR')) {
+				return { name: undefined };
+			}
+			if (prompt.message.startsWith('Enter the URL to open')) {
+				return { url: 'http://localhost:5173' };
+			}
+			throw new Error(`No mock response defined for: ${prompt.message}`);
+		}
 	});
 
 	const playhar = await import('../src/playhar.js');

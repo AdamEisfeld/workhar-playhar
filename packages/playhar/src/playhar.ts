@@ -101,6 +101,7 @@ export const extractionsFromFile = mustachr.extractionsFromFile;
 export const record = async (options: {
 	config?: types.PlayharConfig,
 	name: string,
+	url: string,
 }): Promise<{
 	harFilePath: string,
 	workharJsonDirectory: string,
@@ -137,7 +138,7 @@ export const record = async (options: {
 	});
 
 	const page = await context.newPage();
-	await page.goto(config.baseRecordingUrl);
+	await page.goto(options.url);
 	await page.pause();
 
 	await context.close();
@@ -220,7 +221,7 @@ export const mock = async (options: {
 	
 	// Convert the recorded JSON files to a new HAR file at the specified location
 	await workhar.json2har({
-		fromWorkHarFile: workharFile,
+		fromWorkharFile: workharFile,
 		withJsonDirectory: recordedJsonDirectory,
 		toHarFile: toHarFile,
 	});

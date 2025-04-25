@@ -26,7 +26,6 @@ test('mock uses default config if not specified', async () => {
 	// Create a playhar config
 	const config = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [
 			{
@@ -42,6 +41,7 @@ test('mock uses default config if not specified', async () => {
 	await playhar.record({
 		config,
 		name: RECORDING_NAME,
+		url: 'https://example.com/',
 	});
 
 	// Run the mock command to create a mocked HAR file

@@ -11,7 +11,6 @@ test('configFromFile .json', async () => {
 	// Create a playhar config
 	const config: playhar.types.PlayharConfig = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com/record-config-json',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [],
 	});
@@ -34,7 +33,6 @@ test('configFromFile .js', async () => {
 	// Create a playhar config
 	const config: playhar.types.PlayharConfig = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com/record-config-js',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [],
 	});
@@ -57,7 +55,6 @@ test('configFromFile .ts', async () => {
 	// Create a playhar config
 	const config: playhar.types.PlayharConfig = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com/record-config-ts',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [],
 	});
@@ -84,7 +81,6 @@ test('configFromFile with fallbacks .json', async () => {
 	// Create a playhar config
 	const config: playhar.types.PlayharConfig = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com/record-config-json',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [],
 	});

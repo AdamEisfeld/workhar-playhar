@@ -1,28 +1,20 @@
-# Workhar 🛠️
+# Workhar
 
-**Workhar** is a CLI and TypeScript library that helps you convert `.har` files into editable `.json` fixtures — and back again.
+**Workhar** is an open-source CLI and TypeScript library for converting `.har` files into editable `.json` response fixtures — and back again.
 
-Designed for use in test environments and mock servers, it allows you to extract JSON responses from network requests into file-based mocks, then rebuild those mocks into usable HAR files when needed.
-
----
-
-## ✨ Features
-
-- 🔄 Convert `.har` files into structured `.json` response files.
-- 🔁 Rebuild `.har` files from those `.json` files, replacing the content.
-- 🧠 Smart handling of GraphQL operation names.
-- ✅ Fully type-safe with Zod schemas.
-- 💯 100% test coverage.
+Designed for use in test environments and mock servers, it allows you to extract JSON responses from HAR file network requests into individual .json files, then rebuild those .json files into usable HAR files when needed.
 
 ---
 
-## 📦 Installation
+## Installation
+
+Install locally for programmatic or project-level CLI use:
 
 ```bash
 npm install --save-dev workhar
 ```
 
-Or globally for CLI usage:
+Or install globally to use the CLI anywhere:
 
 ```bash
 npm install -g workhar
@@ -30,43 +22,57 @@ npm install -g workhar
 
 ---
 
-## 🧠 Core Concepts
+## Concepts
 
-- **HAR to JSON**: Extract JSON responses from a HAR file into a directory structure that mirrors the request URLs.
-- **JSON to HAR**: Rehydrate a HAR file by injecting content from the corresponding JSON files.
+Workhar supports two operations:
+
+### HAR → JSON (`har2json`)
+
+- Extracts JSON responses from a `.har` file
+- Replaces the HAR content with a relative file path
+- Saves original response bodies in `json/` as individual files
+- Stores the full HAR structure in a `.workhar` file
+
+### JSON → HAR (`json2har`)
+
+- Reads a `.workhar` file and matching `json/` files
+- Injects content back into the HAR responses
+- Outputs a rebuilt HAR file ready for mocking
 
 ---
 
-## 📁 Example
+## Example File Structure
 
-Given a `.har` file with JSON responses, Workhar will extract each response into a `.json` file like:
+After extraction:
 
 ```
-workhar/json/
-  └── https:/
-       └── api.example.com/
+output/
+├── .workhar
+└── json/
+    └── https:/
+        └── api.example.com/
             └── users/
-                 └── getUser_0.json
+                └── getUser_0.json
 ```
 
-These files can be manually edited, then used to regenerate a new `.har` file via the CLI or API.
+You can edit the `.json` files directly, then regenerate a new HAR using the `.workhar` map.
 
 ---
 
-## 🚀 CLI Usage
+## CLI Usage
 
 ```bash
 workhar har2json <harFile> <workHarFile> [options]
 workhar json2har <workHarFile> <harFile> [options]
 ```
 
-### Extract HAR → JSON
+### HAR → JSON
 
 ```bash
 workhar har2json ./recording.har ./output/.workhar --json ./output/json
 ```
 
-### Build HAR ← JSON
+### JSON → HAR
 
 ```bash
 workhar json2har ./output/.workhar ./hydrated.har --json ./output/json
@@ -74,19 +80,21 @@ workhar json2har ./output/.workhar ./hydrated.har --json ./output/json
 
 ---
 
-## 🧰 Programmatic API
+## Programmatic API
 
 ```ts
 import { har2json, json2har } from 'workhar';
 
+// Convert HAR to editable .json responses
 await har2json({
   fromHarFile: './recording.har',
   toWorkharFile: './output/.workhar',
   withJsonDirectory: './output/json',
 });
 
+// Rebuild HAR from modified JSON
 await json2har({
-  fromWorkHarFile: './output/.workhar',
+  fromWorkharFile: './output/.workhar',
   withJsonDirectory: './output/json',
   toHarFile: './hydrated.har',
 });
@@ -94,45 +102,47 @@ await json2har({
 
 ---
 
-## 🧠 How It Works
+## File Outputs
 
-- When extracting from HAR, Workhar:
-  - Parses each entry.
-  - Skips non-JSON content.
-  - Saves each JSON payload into a structured file path based on the request URL.
-  - Replaces the HAR response content with the relative JSON file path.
-
-- When rebuilding the HAR:
-  - Reads the `.workhar` file and associated `.json` files.
-  - Injects the contents back into the HAR response blocks.
+- **`.workhar`**: A structured JSON representation of the original HAR with response bodies replaced by file paths
+- **`json/`**: The extracted responses, organized by request URL and operation
 
 ---
 
-## 📂 File Outputs
+## How It Works
 
-- `.workhar`: Contains the full HAR structure with response content replaced by relative file paths.
-- `json/`: Contains extracted response bodies for each request.
+### When extracting:
+- Reads the HAR entries
+- Skips non-JSON responses
+- For GraphQL, appends the operation name to the output path
+- Saves each JSON response to a file, and replaces the original response in the HAR with its relative path
+
+### When rebuilding:
+- Loads the `.workhar` map and `json/` responses
+- Replaces the relative file paths in the HAR with actual JSON content
+- Produces a new HAR file with real responses
 
 ---
 
-## 🧪 Testing
+## Testing
 
-Workhar includes complete tests powered by Vitest.
+Workhar is fully tested with [Vitest](https://vitest.dev/):
 
 ```bash
-npm test
+npm run test
 ```
 
 ---
 
-## 🧠 Use Cases
+## Use Cases
 
-- Reproducible API mocking.
-- Isolated frontend development without backend dependency.
-- Test fixture generation for end-to-end testing.
+- Redacting or editing HAR files for sharing
+- Easier modification of HAR files
+- Replacing HAR content at runtime or test-time
+- E2E testing with deterministic mock data
 
 ---
 
-## 📜 License
+## License
 
 MIT © 2025

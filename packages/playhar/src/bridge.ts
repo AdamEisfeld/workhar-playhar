@@ -29,7 +29,11 @@ export const run = (argv: string[] = process.argv) => {
 				'-n, --name <name>',
 				'Name of the folder to save this HAR recording under (e.g., "login-flow")'
 			)
-			.action(async (options: { config: string, name?: string }) => {
+			.option(
+				'-u, --url <url>',
+				'URL to open in the browser to start recording from',
+			)
+			.action(async (options: { config: string, name?: string, url?: string }) => {
 
 				try {
 
@@ -53,6 +57,14 @@ export const run = (argv: string[] = process.argv) => {
 						}
 					]);
 
+					const { url } = options?.url !== undefined ? options : await inquirer.prompt([
+						{
+							type: 'input',
+							name: 'url',
+							message: `Enter the URL to open in the browser to start recording from (e.g., "https://example.com/")`,
+						}
+					]);
+
 					if (!name || name.length === 0) {
 						throw new playhar.errors.PlayharErrorRecordingNameRequired();
 					}
@@ -60,6 +72,7 @@ export const run = (argv: string[] = process.argv) => {
 					await playhar.record({
 						config,
 						name,
+						url,
 					});
 	
 					resolve();

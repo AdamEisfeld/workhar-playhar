@@ -14,13 +14,11 @@ import * as mustachr from 'mustachr';
  *
  * Properties:
  * - `directory`: Root folder where recordings and extracted files are stored.
- * - `baseRecordingUrl`: The URL to open when starting a Playwright HAR recording session.
  * - `baseRequestUrl`: A URL filter to determine which requests should be recorded into the HAR.
  * - `extractions`: An array of Mustachr extraction rules used to sanitize/extract sensitive or dynamic values in the HAR.
  */
 export const PlayharConfigSchema = z.object({
 	directory: z.string(),
-	baseRecordingUrl: z.string(),
 	baseRequestUrl: z.string(),
 	extractions: mustachr.types.MustachrExtractionsSchema,
 });

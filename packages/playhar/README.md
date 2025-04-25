@@ -1,27 +1,17 @@
 # Playhar 🎭
 
-**Playhar** is a CLI and TypeScript library that extends the power of [Mustachr](https://npmjs.com/package/mustachr) and [Workhar](https://npmjs.com/package/workhar) by integrating them into a developer-friendly workflow for recording, templating, and mocking API traffic in your Playwright tests.
+**Playhar** is a CLI and TypeScript library that extends the power of [`mustachr`](https://npmjs.com/package/mustachr) and [`workhar`](https://npmjs.com/package/workhar) to help you record, sanitize, and replay API traffic in Playwright tests.
 
 It helps you:
 
-- Record HAR files from real browser sessions.
-- Replace secrets or variable values with mustache-style templates.
-- Extract and store response data as editable `.json` files.
-- Rebuild those HAR files on demand for use with `page.routeFromHAR()`.
+- Record real API traffic using Playwright.
+- Replace secrets or dynamic values with `{{ mustache }}` tokens.
+- Extract responses into editable `.json` files.
+- Rebuild those `.har` files for use with `page.routeFromHAR()`.
 
 ---
 
-## ✨ Features
-
-- 🎥 Record real interactions using Playwright.
-- 🧩 Replace dynamic or secret values with template tokens.
-- 🧪 Extract and store JSON responses as test fixtures.
-- 🔁 Mock exact API responses in Playwright tests.
-- 📦 Built on top of `mustachr` and `workhar`.
-
----
-
-## 📦 Installation
+## Installation
 
 ```bash
 npm install --save-dev playhar
@@ -35,16 +25,17 @@ npm install -D @playwright/test
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
-Create a `playhar.config.ts` file:
+playhar requires a config file that defines where recordings should be saved and what extractions to apply.
+
+### Example `playhar.config.ts`
 
 ```ts
 import { defineConfig } from 'playhar';
 
 export default defineConfig({
   directory: './recordings',
-  baseRecordingUrl: 'http://localhost:5173',
   baseRequestUrl: 'https://api.example.com',
   extractions: [
     {
@@ -57,36 +48,38 @@ export default defineConfig({
 });
 ```
 
+This config can be passed to `record()` or `mock()` programmatically, or loaded automatically via the CLI using `--config`.
+
 ---
 
-## 🚀 CLI Usage
+## CLI Usage
 
 ```bash
-playhar record [options]
+playhar record --url <url> [options]
 playhar mock [options]
 ```
 
-### 🔴 `playhar record`
+### `playhar record`
 
-Records a HAR file while you interact with a webpage, extracts response JSONs, and templates secrets.
+Launches a browser, records network traffic to a `.har` file, replaces values using `mustachr`, and extracts `.json` responses using `workhar`.
 
 ```bash
-playhar record --config ./playhar.config.ts
+playhar record --url http://localhost:5173 --config ./playhar.config.ts
 ```
 
-You’ll be prompted to name the recording. Playwright will launch a browser session. Once you finish interacting, close the browser to complete the recording.
+You’ll be prompted to name the recording (e.g., `auth-flow`), and specify the URL to open for recording in the browser. Once finished interacting, close the browser to complete the recording and extraction process.
 
 ---
 
-### 🧪 `playhar mock`
+### `playhar mock`
 
-Rebuilds a mock HAR file from the previously extracted JSON files.
+Rebuilds a HAR file from extracted JSON responses, optionally injecting values back into mustache tokens.
 
 ```bash
-playhar mock --config ./playhar.config.ts --name my-recording --injections ./injections.json --out ./mocked.har
+playhar mock --config ./playhar.config.ts --name auth-flow --injections ./injections.json --out ./mocked.har
 ```
 
-This HAR file can now be used in Playwright tests:
+You can then use the rebuilt `.har` in a test:
 
 ```ts
 await page.routeFromHAR('./mocked.har');
@@ -94,23 +87,27 @@ await page.routeFromHAR('./mocked.har');
 
 ---
 
-## 🧰 Programmatic API
+## Programmatic API
 
 ```ts
 import { record, mock, configFromFile } from 'playhar';
 
-const config = await configFromFile({ file: './playhar.config.ts', fallbacks: [] });
+const config = await configFromFile({
+  file: './playhar.config.ts',
+  fallbacks: [],
+});
 
 await record({
   config,
   name: 'auth-flow',
+  url: 'http://localhost:5173',
 });
 
 await mock({
   config,
   name: 'auth-flow',
   injections: {
-    SECRET_TOKEN: 'abc123',
+    SECRET_TOKEN: 'mocked-token',
   },
   toHarFile: './mocked.har',
 });
@@ -118,7 +115,7 @@ await mock({
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 recordings/
@@ -130,18 +127,17 @@ recordings/
 
 ---
 
-## ✅ Perfect For
+## File Types
 
-- 🔬 Playwright test mocking
-- 🔁 Replaying backend interactions locally
-- 🔐 Masking secrets from test fixtures
-- 💻 Frontend-only development
+- **.har**: The Playwright-recorded HAR file (sanitized with mustache tokens).
+- **.json**: Extracted response bodies for each request.
+- **.workhar**: Internal mapping of requests/responses used by Workhar.
 
 ---
 
-## 🧪 Testing
+## Testing
 
-Playhar ships with 100% test coverage. Run tests with:
+Playhar ships with 100% test coverage using Vitest.
 
 ```bash
 npm test
@@ -149,6 +145,6 @@ npm test
 
 ---
 
-## 📜 License
+## License
 
 MIT © 2025

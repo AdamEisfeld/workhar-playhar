@@ -22,7 +22,6 @@ test('mock throws if no config specified and no default config found', async () 
 	// Create a playhar config
 	const config = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [
 			{
@@ -38,6 +37,7 @@ test('mock throws if no config specified and no default config found', async () 
 	await playhar.record({
 		config,
 		name: RECORDING_NAME,
+		url: 'https://example.com/',
 	});
 
 	// Run mock, but don't pass config. This should attempt to read in the default config file but fail because it doesn't exist.

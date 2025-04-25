@@ -68,7 +68,7 @@ export const run = (argv: string[] = process.argv) => {
 					} = options;
 			
 					await workhar.json2har({
-						fromWorkHarFile: workHarFile,
+						fromWorkharFile: workHarFile,
 						withJsonDirectory,
 						toHarFile: harFile,
 					});

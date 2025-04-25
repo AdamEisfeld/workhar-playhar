@@ -13,7 +13,7 @@ export const deleteTempDir = (dir: string): void => {
 	try {
 		fs.rmSync(dir, { recursive: true, force: true });
 	} catch (error) {
-		if (typeof error === 'object' && error && 'code' in error && (error as any).code === 'ENOENT') {
+		if (typeof error === 'object' && error && 'code' in error && (error as { code: string }).code === 'ENOENT') {
 			return;
 		}
 		throw error;
@@ -38,13 +38,22 @@ export const useTempDir = (id?: string): (() => string) => {
 
 };
 
-
 export const mockInquirer = async (options: {
-	response: Record<string, unknown>,
+	handler: (prompt: { name: string; message: string }) => Record<string, unknown>;
 }) => {
 	vi.doMock('inquirer', () => ({
 		default: {
-			prompt: vi.fn().mockResolvedValue(options.response),
+			prompt: vi.fn().mockImplementation((questions) => {
+				const questionArray = Array.isArray(questions) ? questions : [questions];
+				const result: Record<string, unknown> = {};
+
+				for (const question of questionArray) {
+					const response = options.handler(question);
+					Object.assign(result, response);
+				}
+
+				return Promise.resolve(result);
+			}),
 		},
 	}));
 };

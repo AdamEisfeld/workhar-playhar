@@ -25,6 +25,7 @@ test('record throws if recorded .har not found', async () => {
 	try {
 		await playhar.record({
 			name: 'nonexistent-recording',
+			url: 'http://localhost:5173',
 		});
 		throw new Error('Expected an error to be thrown, but it did not.');
 	} catch (error) {

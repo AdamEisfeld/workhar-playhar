@@ -12,9 +12,18 @@ test('Test CLI record happy path', async () => {
 
 	// Mock Inquirer to skip the prompt for the recording name
 	await mockInquirer({
-		response: {
-			name: RECORDING_NAME,
-		},
+		handler: (prompt) => {
+			if (prompt.message.startsWith('Enter a name for this HAR recording')) {
+				return { name: RECORDING_NAME };
+			}
+			if (prompt.message.startsWith('Enter the name of an existing HAR')) {
+				return { name: RECORDING_NAME };
+			}
+			if (prompt.message.startsWith('Enter the URL to open')) {
+				return { url: 'http://localhost:5173' };
+			}
+			throw new Error(`No mock response defined for: ${prompt.message}`);
+		}
 	});
 
 	// Mock Playwright to record a fake har file so we don't launch a real browser or pause
@@ -54,7 +63,6 @@ test('Test CLI record happy path', async () => {
 	// Create a playhar config file
 	const config = playhar.defineConfig({
 		directory: TEMP_DIR(),
-		baseRecordingUrl: 'https://example.com/bridge-record-happy',
 		baseRequestUrl: 'https://api.example.com',
 		extractions: [],
 	});

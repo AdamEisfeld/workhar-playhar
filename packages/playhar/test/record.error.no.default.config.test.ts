@@ -21,6 +21,7 @@ test('record throws if no config specified and no default config found', async (
 	try {
 		await playhar.record({
 			name: RECORDING_NAME,
+			url: 'http://localhost:5173',
 		});
 		throw new Error('Expected an error to be thrown, but it did not.');
 	} catch (error) {

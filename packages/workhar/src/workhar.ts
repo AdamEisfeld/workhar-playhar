@@ -127,7 +127,7 @@ export const har2json = async (options: {
  * Rehydrates a HAR file using JSON response files referenced by a `.workhar` file.
  * Reads each mapped response content, replaces the HAR content with the corresponding JSON.
  *
- * @param fromWorkHarFile - Path to the .workhar file.
+ * @param fromWorkharFile - Path to the .workhar file.
  * @param withJsonDirectory - Directory where JSON files are located.
  * @param toHarFile - Path to save the resulting hydrated HAR file.
  *
@@ -137,20 +137,20 @@ export const har2json = async (options: {
  * @throws WorkharErrorJsonFileParseFailed if a referenced JSON file cannot be parsed.
  */
 export const json2har = async (options: {
-	fromWorkHarFile: string,
+	fromWorkharFile: string,
 	withJsonDirectory: string,
 	toHarFile: string,
 }) => {
 
 	const {
-		fromWorkHarFile,
+		fromWorkharFile,
 		withJsonDirectory,
 		toHarFile,
 	} = options;
 
-	if (!fs.existsSync(fromWorkHarFile)) {
+	if (!fs.existsSync(fromWorkharFile)) {
 		throw new errors.WorkharErrorJsonWorkharFileNotFound({
-			workharFile: fromWorkHarFile,
+			workharFile: fromWorkharFile,
 		});
 	}
 	if (!fs.existsSync(withJsonDirectory)) {
@@ -163,13 +163,13 @@ export const json2har = async (options: {
 	
 	let mutableHarObject: z.infer<typeof types.HarFileSchema>;
 	try {
-		const mapString = fs.readFileSync(fromWorkHarFile, 'utf-8');
+		const mapString = fs.readFileSync(fromWorkharFile, 'utf-8');
 		const mapObject = JSON.parse(mapString);
 		const map: types.WorkharFile = types.WorkharFileSchema.passthrough().parse(mapObject);
 		mutableHarObject = map.har;
 	} catch(error) {
 		throw new errors.WorkharErrorJsonWorkharParseFailed({
-			workharFile: fromWorkHarFile,
+			workharFile: fromWorkharFile,
 			error,
 		});
 	}
