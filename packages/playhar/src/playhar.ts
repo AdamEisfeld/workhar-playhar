@@ -196,12 +196,11 @@ export const mock = async (options: {
 	config?: types.PlayharConfig,
 	name: string,
 	injections?: mustachr.types.MustachrInjections,
-	toHarFile: string,
+	toHarFile?: string,
 }): Promise<string> => {
 
 	const {
 		injections,
-		toHarFile,
 	} = options;
 
 	const config = options.config || await defaultConfig();
@@ -219,6 +218,9 @@ export const mock = async (options: {
 		recordingDirectory,
 	});
 	
+	// Use a temporary file if no output path is provided
+	const toHarFile = options.toHarFile || utils._getTempHarFilePath();
+
 	// Convert the recorded JSON files to a new HAR file at the specified location
 	await workhar.json2har({
 		fromWorkharFile: workharFile,
@@ -250,6 +252,5 @@ export const workharErrors = workhar.errors;
 export const mustachrTypes = mustachr.types;
 export const workharTypes = workhar.types;
 
-export * as utils from './utils.js';
 export * as types from './types.js';
 export * as errors from './errors.js';
