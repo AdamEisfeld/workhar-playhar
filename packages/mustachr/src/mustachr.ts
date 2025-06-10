@@ -80,9 +80,8 @@ export const extract = async (options: {
 			}
 			for (const [key, val] of Object.entries(env)) {
 				const escaped = utils._escapeRegex(val);
-				const regex = new RegExp(escaped, 'g');
 				const token = `{{ ${key} }}`;
-				transformers.push((input) => input.replace(regex, token));
+				transformers.push((input) => input.replace(val, token).replace(escaped, token));
 			}
 			break;
 		}
