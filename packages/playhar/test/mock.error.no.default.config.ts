@@ -37,7 +37,9 @@ test('mock throws if no config specified and no default config found', async () 
 	await playhar.record({
 		config,
 		name: RECORDING_NAME,
-		url: 'https://example.com/',
+		prepare: async (page) => {
+			await page.goto('https://example.com/');
+		},
 	});
 
 	// Run mock, but don't pass config. This should attempt to read in the default config file but fail because it doesn't exist.

@@ -1,6 +1,7 @@
 import * as mustachr from '@adameisfeld/mustachr';
 import * as workhar from 'workhar';
 import { chromium } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import fs from 'fs';
 import * as types from './types.js';
 import * as utils from './utils.js';
@@ -101,7 +102,7 @@ export const extractionsFromFile = mustachr.extractionsFromFile;
 export const record = async (options: {
 	config?: types.PlayharConfig,
 	name: string,
-	url: string,
+	prepare?: (page: Page) => Promise<void>,
 }): Promise<{
 	harFilePath: string,
 	workharJsonDirectory: string,
@@ -138,7 +139,12 @@ export const record = async (options: {
 	});
 
 	const page = await context.newPage();
-	await page.goto(options.url);
+
+	if (options.prepare) {
+		await options.prepare(page);
+	}
+
+	// Pausing triggers the recording dialog, allowing the user to start recording / interacting. When this promise resolves, we can close the browser.
 	await page.pause();
 
 	await context.close();

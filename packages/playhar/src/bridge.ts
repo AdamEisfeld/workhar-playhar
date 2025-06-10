@@ -75,7 +75,9 @@ export const run = (argv: string[] = process.argv) => {
 					await playhar.record({
 						config,
 						name,
-						url,
+						prepare: async (page) => {
+							await page.goto(url);
+						},
 					});
 	
 					resolve();

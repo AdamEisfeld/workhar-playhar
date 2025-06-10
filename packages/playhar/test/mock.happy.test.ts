@@ -77,7 +77,9 @@ test('mock happy path', async () => {
 	await playhar.record({
 		config,
 		name: RECORDING_NAME,
-		url: 'https://example.com/',
+		prepare: async (page) => {
+			await page.goto('https://example.com/');
+		},
 	});
 
 	// Create injections

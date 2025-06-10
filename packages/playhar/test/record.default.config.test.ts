@@ -24,7 +24,9 @@ test('record uses default config if not specified', async () => {
 	// Run record, but don't pass config. This should attempt to read in the default config file.
 	await playhar.record({
 		name: RECORDING_NAME,
-		url: 'http://localhost:5173',
+		prepare: async (page) => {
+			await page.goto('http://localhost:5173');
+		},
 	});
 
 });

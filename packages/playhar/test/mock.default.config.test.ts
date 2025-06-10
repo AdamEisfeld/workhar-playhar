@@ -41,7 +41,9 @@ test('mock uses default config if not specified', async () => {
 	await playhar.record({
 		config,
 		name: RECORDING_NAME,
-		url: 'https://example.com/',
+		prepare: async (page) => {
+			await page.goto('https://example.com/');
+		},
 	});
 
 	// Run the mock command to create a mocked HAR file

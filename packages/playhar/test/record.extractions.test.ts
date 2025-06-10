@@ -78,7 +78,9 @@ test('record applies extractions', async () => {
 	} = await playhar.record({
 		config,
 		name: RECORDING_NAME,
-		url: 'https://example.com/',
+		prepare: async (page) => {
+			await page.goto('https://example.com/');
+		},
 	});
 
 	// Verify the har file was recorded to the correct location

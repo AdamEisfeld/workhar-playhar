@@ -1,6 +1,6 @@
 {
 	"name": "playhar",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Record HAR files from browser sessions and convert them into structured mocks for automated testing. Combines Mustachr and Workhar into a complete capture → sanitize → replay workflow.",
 	"keywords": [
 		"playwright",
