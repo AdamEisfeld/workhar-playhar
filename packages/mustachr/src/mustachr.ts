@@ -81,7 +81,7 @@ export const extract = async (options: {
 			for (const [key, val] of Object.entries(env)) {
 				const escaped = utils._escapeRegex(val);
 				const token = `{{ ${key} }}`;
-				transformers.push((input) => input.replace(val, token).replace(escaped, token));
+				transformers.push((input) => input.replaceAll(val, token).replaceAll(escaped, token));
 			}
 			break;
 		}
@@ -97,7 +97,7 @@ export const extract = async (options: {
 			const template = extraction.replace;
 			transformers.push((input) =>
 				input.replace(regex, () =>
-					template.replace(/{{\s*property\s*}}/g, token)
+					template.replaceAll(/{{\s*property\s*}}/g, token)
 				)
 			);
 			break;
@@ -121,7 +121,7 @@ export const extract = async (options: {
 			const template = extraction.replace;
 			transformers.push((input) => {
 				return input.replace(regex, () => {
-					const output = template.replace(/{{\s*property\s*}}/g, token);
+					const output = template.replaceAll(/{{\s*property\s*}}/g, token);
 					return output;
 				});
 			});

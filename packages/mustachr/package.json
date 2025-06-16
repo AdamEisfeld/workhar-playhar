@@ -1,6 +1,6 @@
 {
 	"name": "@adameisfeld/mustachr",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "Extract hardcoded values from files and replace them with mustache-style template variables. Ideal for sanitizing secrets in HAR files and other structured text.",
 	"keywords": [
 		"mustache",
