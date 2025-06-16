@@ -64,9 +64,11 @@ export const run = (argv: string[] = process.argv) => {
 						{
 							type: 'input',
 							name: 'url',
-							message: `Enter the URL to open in the browser to start recording from (e.g., "https://example.com/")`,
+							message: config.defaultRecordingUrl ? `Enter the URL to open in the browser to start recording from, or leave blank to use your default config URL of "${config.defaultRecordingUrl}"` : `Enter the URL to open in the browser to start recording from (e.g., "https://example.com/")`,
 						}
 					]);
+
+					const urlToUse = (url && url.length > 0) ? url : config.defaultRecordingUrl;
 
 					if (!name || name.length === 0) {
 						throw new playhar.errors.PlayharErrorRecordingNameRequired();
@@ -76,7 +78,7 @@ export const run = (argv: string[] = process.argv) => {
 						config,
 						name,
 						prepare: async (page) => {
-							await page.goto(url);
+							await page.goto(urlToUse);
 						},
 					});
 	

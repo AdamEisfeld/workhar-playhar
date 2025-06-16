@@ -19,6 +19,16 @@ test('_uniqueFileNameInDir creates incremented filename in non-empty dir', () =>
 	expect(fileName).toBe(path.join(TEMP_DIR(), 'test_2.json'));
 });
 
+test('_getGraphQLOperationName works for templated URLs', () => {
+	const result = workharUtils._getGraphOperationName({
+		"mimeType": "application/json",
+		"text": JSON.stringify({
+			"query": `query { getFoo { id name } }`,
+		})
+	});
+	expect(result).toBe('getFoo');
+});
+
 test('_getGraphQLOperationName returns undefined for undefined input', () => {
 	const postData = undefined;
 	const result = workharUtils._getGraphOperationName(postData);

@@ -56,7 +56,7 @@ export class WorkharErrorHarGraphQLParseFailed extends WorkharErrorAny {
 		requestURL: string,
 	}) {
 		super({
-			message: `Failed to extract operation name from GraphQL request: ${data.requestURL}.`,
+			message: `Failed to extract operation name from GraphQL request: ${data.requestURL}.\nData: ${JSON.stringify(data ?? {})}`,
 			code: DIEHAR_ERROR_CODE_HAR_GRAPHQL_PARSE_FAILED,
 		});
 	}

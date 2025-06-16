@@ -20,6 +20,7 @@ import * as mustachr from '@adameisfeld/mustachr';
 export const PlayharConfigSchema = z.object({
 	directory: z.string(),
 	baseRequestUrl: z.string(),
+	defaultRecordingUrl: z.string().optional(),
 	extractions: mustachr.types.MustachrExtractionsSchema,
 });
 

@@ -5,6 +5,7 @@ import { mockInquirer, mockRecording } from "test-utils";
 
 export const useDefaultConfigFile = (options: {
 	tempDir: () => string;
+	defaultRecordingUrl?: string;
 }): () => string => {
 
 	let configFilePath: string = '';
@@ -18,6 +19,7 @@ export const useDefaultConfigFile = (options: {
 		const config = {
 			directory: options.tempDir(),
 			baseRequestUrl: 'https://api.example.com',
+			defaultRecordingUrl: options.defaultRecordingUrl,
 			extractions: [
 				{
 					"type": "regex",
